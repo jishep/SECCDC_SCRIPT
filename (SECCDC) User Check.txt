@@ -1,0 +1,64 @@
+# Run Get-LocalUser to retrieve local users
+$localUsers = Get-LocalUser
+#create an array of approved users 
+$approvedUsers = @("Caleb", "Administrator", "DefaultAccount", "Guest", "WDAGUtilityAccount")
+# Create an empty array to store user objects
+$userArray = @()
+$removedUser = $false
+New-Variable evilUser
+
+# Iterate through each user obtained from Get-LocalUser
+foreach ($user in $localUsers) {
+    #Create a custom object with desired user properties
+    $userObject = [PSCustomObject]@{
+        UserName = $user.Name
+        FullName = $user.FullName
+    }
+
+    # Add the user object to the array
+    $userArray += $userObject
+}
+
+# Display the array of user objects
+#$userArray
+
+foreach($user in $localUsers) {
+    Write-Host "Checking User $($user)"
+   
+    if ($approvedUsers -notContains $user){
+         Write-Host "Unauthorized User: $($user) found in LocalUser DataBase"
+         $evilUser = $user
+         $deletable = Read-Host "Do you want the user to be deleted? y/n"
+         if ($deletable -eq "y"){
+            Remove-LocalUser $user
+            #Get-LocalUser
+            if ($userArray -notContains $user){
+                Write-Host "User sucessfully deleted"
+                $removedUser = $true
+            }
+         }
+
+         else{
+
+
+         }
+    }
+
+}
+Write-Host "Remaining list of users:"
+Get-LocalUser
+
+
+
+$commandOutput2 = Get-LocalUser
+
+
+$timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+$filePath = "C:\users\airma\Desktop\Log.txt"
+
+# Append the output string to the text document
+$timestamp | Out-File -Append -FilePath $filepath
+
+"Users removed?: $($removedUser) $($evilUser)" | Out-File -Append -FilePath $filepath
+$commandOutput2 | Out-File -Append -FilePath $filepath
+

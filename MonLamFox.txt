@@ -1,0 +1,83 @@
+NORMAL
+sudo iptables -F
+sudo iptables -A INPUT -j DROP
+sudo iptables -A OUTPUT -j DROP
+sudo iptables -I INPUT -p tcp --sport 22 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 22 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -s <WhiteTeamIP> -j ACCEPT
+sudo iptables -I OUTPUT -d <WhiteTeamIP> -j ACCEPT
+
+WEB
+sudo iptables -F
+sudo iptables -A INPUT -j DROP
+sudo iptables -A OUTPUT -j DROP
+sudo iptables -I INPUT -p tcp --sport 22 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 22 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 80 -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 80 -s <DeviceIP> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 1433 -s <SQLsvrIP> -d <WEBsvrIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 1433 -s <WEBsvrIP> -d <SQLsvrIP> -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 443 -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 443 -s <DeviceIP> -j ACCEPT
+sudo iptables -I INPUT -s <WhiteTeamIP> -j ACCEPT
+sudo iptables -I OUTPUT -d <WhiteTeamIP> -j ACCEPT
+
+FILE
+sudo iptables -F
+sudo iptables -A INPUT -j DROP
+sudo iptables -A OUTPUT -j DROP
+sudo iptables -I INPUT -p tcp --sport 22 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 22 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 21 -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 21 -s <DeviceIP> -j ACCEPT
+sudo iptables -I INPUT -s <WhiteTeamIP> -j ACCEPT
+sudo iptables -I OUTPUT -d <WhiteTeamIP> -j ACCEPT
+
+DATABASE
+sudo iptables -F
+sudo iptables -A INPUT -j DROP
+sudo iptables -A OUTPUT -j DROP
+sudo iptables -I INPUT -p tcp --sport 22 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 22 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 1433 -s <WEBsvrIP> -d <SQLsvrIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 1433 -s <SQLsvrIP> -d <WEBsvrIP> -j ACCEPT
+sudo iptables -I INPUT -s <WhiteTeamIP> -j ACCEPT
+sudo iptables -I OUTPUT -d <WhiteTeamIP> -j ACCEPT
+
+DNS
+sudo iptables -F
+sudo iptables -A INPUT -j DROP
+sudo iptables -A OUTPUT -j DROP
+sudo iptables -I INPUT -p tcp --sport 22 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 22 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 53 -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 53 -s <DeviceIP> -j ACCEPT
+sudo iptables -I INPUT -s <WhiteTeamIP> -j ACCEPT
+sudo iptables -I OUTPUT -d <WhiteTeamIP> -j ACCEPT
+
+DIRECTORY
+sudo iptables -F
+sudo iptables -A INPUT -j DROP
+sudo iptables -A OUTPUT -j DROP
+sudo iptables -I INPUT -p tcp --sport 22 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 22 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 53 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 53 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p udp --sport 88 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p udp --dport 88 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 135 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 135 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 139 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 139 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p udp --sport 389 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p udp --dport 389 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 445 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 445 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 464 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 464 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 3268 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 3268 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -p tcp --sport 3269 -s <InternalNetIP/##> -d <DeviceIP> -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --dport 3269 -s <DeviceIP> -d <InternalNetIP/##> -j ACCEPT
+sudo iptables -I INPUT -s <WhiteTeamIP> -j ACCEPT
+sudo iptables -I OUTPUT -d <WhiteTeamIP> -j ACCEPT
